@@ -1,0 +1,32 @@
+.app__open-orders {
+  padding: 16px;
+
+  .base-tabs__tab {
+    padding: 10px 30px !important;
+  }
+
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 130px 20px;
+
+    h4 {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.33;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 378px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--dark-mode-tint3);
+    }
+  }
+}

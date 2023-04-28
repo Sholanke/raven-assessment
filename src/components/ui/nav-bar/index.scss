@@ -1,0 +1,73 @@
+.app__nav-bar {
+  display: flex;
+  align-items: center;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  justify-content: space-between;
+
+  &-container {
+    border-bottom: 1px solid var(--dark-mode-card-stroke2);
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+
+    &__list {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      padding: 5px 32px;
+      margin: 0 32px;
+      border-left: 1px solid rgba(var(--dark-mode-tint3-rgb), 0.16);
+
+      a {
+        &:not(.active) {
+          color: var(--dark-mode-tint3);
+        }
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__profile-btn {
+    display: flex;
+    align-items: center;
+    background-color: var(--dark-mode-tint4);
+    padding: 8px 16px;
+    border-radius: 8px;
+    gap: 8px;
+
+    &__avatar {
+      height: 32px;
+      width: 32px;
+      display: block;
+      background: var(--dark-mode-tint3);
+      border-radius: 100vh;
+      overflow: hidden;
+      position: relative;
+
+      img {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+
+    p {
+      max-width: 85px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: 500;
+      color: var(--dark-mode-tint3);
+    }
+  }
+}

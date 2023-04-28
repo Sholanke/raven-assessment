@@ -1,0 +1,30 @@
+.base-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  background-color: var(--primary-blue);
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-weight: 500;
+
+  &.w-full {
+    width: 100%;
+  }
+
+  &--gradient {
+    @extend .base-button;
+    background: var(--primary-gradient);
+  }
+
+  &--success {
+    @extend .base-button;
+    background-color: var(--support-success);
+  }
+
+  &--danger {
+    @extend .base-button;
+    background-color: var(--support-alert);
+  }
+}

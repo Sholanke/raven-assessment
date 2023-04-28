@@ -1,0 +1,135 @@
+import React, { useEffect, useRef } from "react";
+import TradesChartHeader from "./trades-chart-header";
+import { ColorType, createChart } from "lightweight-charts";
+import "./index.scss";
+import { MOCK_TRADES_DATA } from "./constants";
+import { SvgSquaredArrowDown } from "../../../ui/icons";
+
+export default function TradesChart() {
+  const chartRef = useRef<any>();
+  const chart = useRef<any>();
+
+  useEffect(() => {
+    if (chart.current) return;
+
+    chart.current = createChart(chartRef.current, {
+      width: chartRef.current.clientWidth,
+      height: chartRef.current.clientHeight,
+      ...CHART_CONFIG.chartLayout,
+    });
+
+    const candlestickSeries = chart.current.addCandlestickSeries(
+      CHART_CONFIG.candleStickConfig
+    );
+    candlestickSeries.setData(MOCK_TRADES_DATA);
+
+    const histogramChart = chart.current.addHistogramSeries(
+      CHART_CONFIG.histogramConfig
+    );
+    histogramChart.setData(MOCK_TRADES_DATA);
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      chart.current.applyOptions({
+        width,
+        height,
+      });
+    });
+
+    resizeObserver.observe(chartRef.current);
+  }, []);
+
+  return (
+    <div className="app__trades-chart">
+      <TradesChartHeader />
+      <div className="app__trades-chart__content base-card">
+        <div className="app__trades-chart__content__chart">
+          <div className="app__trades-chart__content__chart__metrics">
+            <button>
+              <SvgSquaredArrowDown />
+            </button>
+            <p>
+              O <span>36,641.54</span>
+            </p>
+            <p>
+              H <span>36,641.54</span>
+            </p>
+            <p>
+              L <span>36,641.54</span>
+            </p>
+            <p>
+              C <span>36,641.54</span>
+            </p>
+            <p>
+              Change: <span>2.33%</span>
+            </p>
+            <p>
+              Amplitude <span>6.59%</span>
+            </p>
+          </div>
+
+          <div className="app__trades-chart__content__chart__volume-metrics">
+            <p>
+              Vol(BTC): <span>65.254K</span>
+            </p>
+            <p>
+              Vol(USDT): <span>2.418B</span>
+            </p>
+          </div>
+
+          <div className="chart-container" ref={chartRef}>
+            {/* === trades chart === */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const CHART_CONFIG = {
+  interval: "5s",
+  chartLayout: {
+    layout: {
+      background: {
+        type: ColorType.Solid,
+        color: "transparent",
+      },
+      textColor: "#A7B1BC",
+    },
+    grid: {
+      vertLines: {
+        color: "#1C2127",
+      },
+      horzLines: {
+        color: "#1C2127",
+      },
+    },
+    priceScale: {
+      borderColor: "#555C63",
+    },
+    timeScale: {
+      borderColor: "#485c7b",
+      timeVisible: true,
+      secondsVisible: false,
+    },
+  },
+  candleStickConfig: {
+    borderDownColor: "#FF6838",
+    borderUpColor: "#00C076",
+    wickDownColor: "#FF6838",
+    wickUpColor: "#00C076",
+    upColor: "#00C076",
+    downColor: "#FF6838",
+  },
+  histogramConfig: {
+    base: 0,
+    priceFormat: {
+      type: "volume",
+    },
+    overlay: true,
+    scaleMargins: {
+      top: 0.8,
+      bottom: 0,
+    },
+  },
+};

@@ -1,0 +1,62 @@
+.app__buy-and-sell {
+  padding: 14px 10px 58px 10px;
+  height: fit-content;
+  position: sticky;
+  top: 8px;
+
+  &__secondary-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 18px 0 16px 0;
+
+    button {
+      padding: 6px 12px;
+      color: var(--dark-mode-tint3);
+      font-size: 14px;
+
+      &.active {
+        background-color: var(--dark-mode-tint2);
+        border-radius: 100px;
+        color: var(--dark-mode-text);
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--dark-mode-tint3);
+    font-size: 12px;
+    padding: 16px 0;
+  }
+
+  &__total-available {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0 0 0;
+
+    &:first-of-type {
+      border-top: 1px solid var(--dark-mode-border);
+      margin: 16px 0 0 0;
+    }
+
+    &:last-child {
+      margin-bottom: 32px;
+    }
+
+    &__key {
+      color: var(--dark-mode-tint3);
+      font-size: 12px;
+      margin-bottom: 8px;
+      min-width: 80px;
+      display: flex;
+    }
+
+    &__value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}

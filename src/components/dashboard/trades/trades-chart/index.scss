@@ -1,0 +1,115 @@
+.app__trades-chart {
+  &__header {
+    padding: 18px 16px;
+    border-bottom: 1px solid var(--dark-mode-card-stroke);
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    margin-bottom: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-mode-tint3);
+
+    &__filter-btn,
+    &__filter-label {
+      padding: 6px 12px;
+      border-radius: 100px;
+      font-size: 14px;
+      display: flex;
+      gap: 12px;
+
+      &.active {
+        background-color: var(--dark-mode-tint);
+        color: #fff;
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+    }
+
+    &__filter-label {
+      padding: 0;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+
+      &__action {
+        padding: 2px 8px;
+        display: flex;
+        gap: 10px;
+        border-right: 1px solid rgba(var(--dark-mode-tint3-rgb), 0.1);
+        font-size: 14px;
+
+        &:first-child {
+          border-left: 1px solid rgba(var(--dark-mode-tint3-rgb), 0.1);
+        }
+      }
+    }
+
+    &__expand-btn {
+      margin-left: auto;
+    }
+  }
+
+  &__content {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+
+    &__chart {
+      position: relative;
+      min-height: 496px;
+
+      &__metrics {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 16px;
+        font-size: 10px;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+
+        button {
+          display: flex;
+          align-items: center;
+
+          svg {
+            height: 16.67px;
+            width: 16.67px;
+          }
+        }
+
+        p {
+          color: var(--dark-mode-tint3);
+          span {
+            color: var(--chart-green);
+          }
+        }
+      }
+
+      &__volume-metrics {
+        @extend .app__trades-chart__content__chart__metrics;
+        top: unset;
+        bottom: 150px;
+
+        p {
+          span {
+            color: var(--chart-red);
+          }
+        }
+      }
+
+      .chart-container {
+        position: absolute;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: unset !important;
+        min-height: unset !important;
+      }
+    }
+  }
+}

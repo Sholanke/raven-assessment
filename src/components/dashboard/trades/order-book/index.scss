@@ -1,0 +1,118 @@
+.app__trades__order-book {
+  padding: 12px 0;
+
+  &__section {
+    padding: 0 8px;
+  }
+
+  &__header {
+    margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__order-btns {
+    display: flex;
+    align-items: center;
+
+    button {
+      height: 32px;
+      width: 32px;
+      border-radius: 4px;
+
+      &.active {
+        background-color: var(--dark-mode-tint2);
+      }
+    }
+  }
+
+  &__count-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: var(--dark-mode-tint2);
+
+    svg {
+      color: var(--dark-mode-tint5);
+    }
+  }
+
+  &__table {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &__row {
+      display: flex;
+      padding: 4px 20px;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+
+      .percentage-bar {
+        display: block;
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        background-color: var(--chart-red);
+        right: 2px;
+        opacity: 0.15;
+      }
+
+      div {
+        flex: 1;
+        max-width: 54px;
+        flex-shrink: 0;
+        line-height: 1.67;
+        font-size: 12px;
+        text-align: right;
+        z-index: 1;
+        position: relative;
+
+        &:first-child {
+          text-align: left;
+        }
+      }
+
+      &--head {
+        @extend .app__trades__order-book__table__row;
+        color: var(--dark-mode-tint3);
+        font-weight: 400;
+      }
+
+      &.theme-green {
+        div:first-child {
+          color: var(--chart-green);
+        }
+        .percentage-bar {
+          background-color: var(--chart-green);
+        }
+      }
+
+      &.theme-red {
+        div:first-child {
+          color: var(--chart-red);
+        }
+        .percentage-bar {
+          background-color: var(--chart-red);
+        }
+      }
+    }
+
+    &__divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 4px;
+      gap: 8px;
+
+      .color-green,
+      svg {
+        color: var(--chart-green);
+      }
+    }
+  }
+}

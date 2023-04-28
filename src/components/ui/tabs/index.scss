@@ -1,0 +1,65 @@
+.base-tabs {
+  width: 100%;
+  display: flex;
+  padding: 2px;
+  border-radius: 10px;
+  background-color: var(--dark-mode-tab-bg);
+
+  &.w-fit {
+    width: fit-content;
+
+    .base-tabs__tab {
+      flex: unset;
+    }
+  }
+
+  &__tab {
+    flex: 1;
+    padding: 6px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--dark-mode-tint3);
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+
+    &:after {
+      content: "";
+      height: 20px;
+      width: 1px;
+      background-color: var(--dark-mode-tint3);
+      opacity: 0.16;
+      position: absolute;
+      left: 0;
+    }
+
+    &.active {
+      @extend .base-tabs__tab;
+      color: var(--dark-mode-text);
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12),
+        0px 3px 1px rgba(0, 0, 0, 0.04);
+      background-color: var(--dark-mode-card-bg);
+
+      &,
+      & + .base-tabs__tab {
+        &::after {
+          content: unset;
+        }
+      }
+    }
+
+    &.glow {
+      border: 1px solid transparent;
+
+      &.active {
+        border: 1px solid var(--chart-green);
+      }
+    }
+
+    &:first-child {
+      &::after {
+        content: unset;
+      }
+    }
+  }
+}
