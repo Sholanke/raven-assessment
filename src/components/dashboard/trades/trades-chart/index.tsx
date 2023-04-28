@@ -15,25 +15,22 @@ export default function TradesChart() {
     chart.current = createChart(chartRef.current, {
       width: chartRef.current.clientWidth,
       height: chartRef.current.clientHeight,
-      ...CHART_CONFIG.chartLayout,
+      ...CHART_CONFIG.CHART_LAYOUT,
     });
 
     const candlestickSeries = chart.current.addCandlestickSeries(
-      CHART_CONFIG.candleStickConfig
+      CHART_CONFIG.CANDLE_STICK_CONFIG
     );
-    candlestickSeries.setData(MOCK_TRADES_DATA);
-
     const histogramChart = chart.current.addHistogramSeries(
-      CHART_CONFIG.histogramConfig
+      CHART_CONFIG.HISTOGRAM_CONFIG
     );
+    
+    candlestickSeries.setData(MOCK_TRADES_DATA);
     histogramChart.setData(MOCK_TRADES_DATA);
 
     const resizeObserver = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
-      chart.current.applyOptions({
-        width,
-        height,
-      });
+      chart.current.applyOptions({ width, height });
     });
 
     resizeObserver.observe(chartRef.current);
@@ -87,8 +84,7 @@ export default function TradesChart() {
 }
 
 const CHART_CONFIG = {
-  interval: "5s",
-  chartLayout: {
+  CHART_LAYOUT: {
     layout: {
       background: {
         type: ColorType.Solid,
@@ -113,7 +109,7 @@ const CHART_CONFIG = {
       secondsVisible: false,
     },
   },
-  candleStickConfig: {
+  CANDLE_STICK_CONFIG: {
     borderDownColor: "#FF6838",
     borderUpColor: "#00C076",
     wickDownColor: "#FF6838",
@@ -121,7 +117,7 @@ const CHART_CONFIG = {
     upColor: "#00C076",
     downColor: "#FF6838",
   },
-  histogramConfig: {
+  HISTOGRAM_CONFIG: {
     base: 0,
     priceFormat: {
       type: "volume",
