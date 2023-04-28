@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SvgBtcUsdt, SvgSearchIcon, SvgSharpAngleDown } from "../../ui/icons";
 import { classNames } from "../../../utils";
 import useTabs from "../../../hooks/useTabs";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 export default function CoinDropdown() {
   const [showCoinDropdown, setCoinDropdownVisibility] = useState(false);
   const { tabs } = useTabs({ tabs: ["All", "USD", "BTC"] });
+  const dropdownRef = useRef(null);
+
+  useClickOutside(() => setCoinDropdownVisibility(false), dropdownRef?.current);
 
   return (
-    <div className="form-select-dropdown">
+    <div className="form-select-dropdown" ref={dropdownRef}>
       <button
         className="app__dashboard-metrics__coin-dropdown"
         onClick={() => setCoinDropdownVisibility(!showCoinDropdown)}
