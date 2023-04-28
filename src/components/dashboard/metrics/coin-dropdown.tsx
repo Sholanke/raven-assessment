@@ -48,20 +48,22 @@ export default function CoinDropdown() {
         </div>
 
         <div>
-          {MOCK_TABLE_DATA.map(({ label, amount, percentage }, i) => (
-            <div
-              className="app__dashboard-metrics__coin-dropdown__table-row"
-              key={i}
-            >
-              <div>
-                <SvgBtcUsdt /> <p>{label}</p>
+          {MOCK_TABLE_DATA.map(
+            ({ label, amount, percentage, icon: Icon }, i) => (
+              <div
+                className="app__dashboard-metrics__coin-dropdown__table-row"
+                key={i}
+              >
+                <div>
+                  <Icon /> <p>{label}</p>
+                </div>
+                <div className="app__dashboard-metrics__coin-dropdown__table-row__value">
+                  <p>{amount}</p>
+                  <p className="percentage">{percentage}</p>
+                </div>
               </div>
-              <div className="app__dashboard-metrics__coin-dropdown__table-row__value">
-                <p>{amount}</p>
-                <p className="percentage">{percentage}</p>
-              </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     </div>
@@ -73,25 +75,30 @@ const MOCK_TABLE_DATA = [
     label: "BTC - USDT",
     amount: "$23,234.6",
     percentage: "+0.005%",
+    icon: SvgBtcUsdt,
   },
   {
     label: "BTC - USDT",
     amount: "$23,234.6",
     percentage: "+0.005%",
+    icon: SvgBtcUsdt,
   },
   {
     label: "BTC - USDT",
     amount: "$23,234.6",
     percentage: "+0.005%",
+    icon: SvgBtcUsdt,
   },
   {
     label: "BTC - USDT",
     amount: "$23,234.6",
     percentage: "+0.005%",
+    icon: SvgBtcUsdt,
   },
   {
     label: "BTC - USDT",
     amount: "$23,234.6",
     percentage: "+0.005%",
+    icon: SvgBtcUsdt,
   },
 ];
