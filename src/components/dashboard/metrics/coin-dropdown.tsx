@@ -47,7 +47,7 @@ export default function CoinDropdown() {
           ))}
         </div>
 
-        <div>
+        <div className="app__dashboard-metrics__coin-dropdown__table">
           {MOCK_TABLE_DATA.map(
             ({ label, amount, percentage, icon: Icon }, i) => (
               <div

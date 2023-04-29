@@ -6,7 +6,6 @@
   align-items: center;
   padding: 16px;
   white-space: nowrap;
-  overflow: hidden;
 
   @include mini-tablet {
     flex-direction: column;
@@ -70,6 +69,10 @@
       bottom: -15px !important;
       min-width: 444px !important;
 
+      @include mini-tablet {
+        min-width: 90vw !important;
+      }
+
       p {
         font-size: 14px;
         font-weight: 500;
@@ -127,6 +130,10 @@
       }
     }
 
+    &__table {
+      overflow: auto;
+    }
+
     &__table-row {
       display: flex;
       align-items: center;
@@ -134,6 +141,7 @@
       font-size: 14px;
       color: var(--dark-mode-tint3);
       padding: 12px 0;
+      gap: 20px;
 
       &:first-child {
         padding-top: 0;
