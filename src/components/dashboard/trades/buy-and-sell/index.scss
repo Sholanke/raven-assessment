@@ -1,6 +1,7 @@
 @import "../../../../styles/mixins";
 
 .app__buy-and-sell {
+  border-radius: 8px !important;
   padding: 14px 10px 58px 10px;
   height: fit-content;
   position: sticky;
@@ -10,9 +11,19 @@
     position: fixed;
     z-index: 3;
     right: 8px;
+    height: calc(100% - 16px);
+    width: 100%;
+    max-width: 350px;
     opacity: 0;
     pointer-events: none;
-    height: calc(100% - 16px);
+    transform: translateY(30px);
+    transition: 0.2s ease;
+
+    &.show {
+      opacity: 1;
+      pointer-events: unset;
+      transform: translateX(0);
+    }
 
     &__bottom-sheet-overlay {
       height: 100%;
@@ -23,10 +34,32 @@
       top: 0;
       left: 0;
     }
+  }
 
-    &.show {
-      opacity: 1;
-      pointer-events: unset;
+  @include mobile {
+    width: 100%;
+    right: unset;
+    top: unset;
+    bottom: 0;
+    left: 0;
+    height: 60%;
+    overflow: auto;
+    padding: 34px;
+    padding-top: 0;
+    border-radius: 16px 0px !important;
+    max-width: unset;
+
+    &:before {
+      content: "";
+      top: 0;
+      left: 0;
+      background: linear-gradient(var(--dark-mode-card-bg), transparent);
+      height: 34px;
+      width: 100%;
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 3;
     }
   }
 
