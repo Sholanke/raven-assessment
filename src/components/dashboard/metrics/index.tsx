@@ -1,14 +1,8 @@
 import React from "react";
-import "./index.scss";
-import {
-  SvgArrowDown,
-  SvgArrowUp,
-  SvgBtcUsdt,
-  SvgChart,
-  SvgClock,
-} from "../../ui/icons";
+import { SvgArrowDown, SvgArrowUp, SvgChart, SvgClock } from "../../ui/icons";
 import { classNames } from "../../../utils";
 import CoinDropdown from "./coin-dropdown";
+import "./index.scss";
 
 export default function DashboardMetrics() {
   return (

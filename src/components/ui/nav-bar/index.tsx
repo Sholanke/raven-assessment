@@ -1,7 +1,7 @@
 import React from "react";
-import "./index.scss";
 import { SvgAngleRight, SvgGlobe, SvgLogOut, SvgLogo, SvgMenu } from "../icons";
 import FormSelectDropDown from "../form-elements/form-select-dropdown";
+import "./index.scss";
 
 export default function NavBar() {
   return (
