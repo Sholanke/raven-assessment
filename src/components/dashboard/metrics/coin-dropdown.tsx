@@ -17,7 +17,7 @@ export default function CoinDropdown() {
         className="app__dashboard-metrics__coin-dropdown"
         onClick={() => setCoinDropdownVisibility(!showCoinDropdown)}
       >
-        <SvgBtcUsdt />
+        <SvgBtcUsdt className="app__dashboard-metrics__coin-dropdown__coin-icon" />
         <p>BTC/USDT</p>
         <SvgSharpAngleDown />
       </button>

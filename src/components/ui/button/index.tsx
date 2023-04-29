@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { classNames } from "../../../utils";
 import "./index.scss";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: "gradient" | "success" | "danger";
   full?: boolean;

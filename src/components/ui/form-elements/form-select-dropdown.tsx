@@ -14,7 +14,7 @@ import useClickOutside from "../../../hooks/useClickOutside";
 interface FormSelectDropDownProps {
   options: { value: string; label: string; icon?: string }[];
   title: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   value: string;
   children?: ReactNode;
 }
@@ -45,7 +45,7 @@ export default function FormSelectDropDown({
   useEffect(() => {
     const firstOption = options?.[0]?.value;
     if (!firstOption) return;
-    onChange(firstOption);
+    onChange?.(firstOption);
   }, []);
 
   useClickOutside(() => {
@@ -68,17 +68,17 @@ export default function FormSelectDropDown({
 
       <div
         className={classNames("form-select-dropdown__dropdown", {
-          "active": isOpen,
+          active: isOpen,
         })}
       >
-        {options.map(({ label, value, icon }, i) => (
+        {options.map(({ label, value, icon }) => (
           <button
             className={classNames("form-select-dropdown__dropdown__item", {
               active: value === selectedValue,
             })}
             onClick={() => {
               setTimeout(() => setIsOpen(false), 80); // wait for select animation
-              onChange(value);
+              onChange?.(value);
             }}
             key={value}
           >

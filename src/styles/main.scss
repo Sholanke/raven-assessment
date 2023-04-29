@@ -1,5 +1,6 @@
 @import "./font";
 @import "./form-elements";
+@import "./mixins";
 
 :root {
   --chart-green: #00c076;
@@ -67,6 +68,10 @@ body {
   background: var(--dark-mode-bg);
   color: var(--dark-mode-text);
   font-size: 14px;
+
+  @include tablet {
+    padding-bottom: 62px;
+  }
 }
 
 .app__container {

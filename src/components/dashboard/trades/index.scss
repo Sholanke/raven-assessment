@@ -1,19 +1,37 @@
+@import "../../../styles/mixins";
+
 .app__dashboard-trades {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 8px;
   padding-bottom: 58px;
-  
+
+  @include tablet {
+    overflow: auto;
+  }
+
+  @include mobile {
+    overflow: unset;
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: 1fr 245px;
     gap: 8px;
     height: fit-content;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
   }
 
   &-container {
     display: grid;
     grid-template-columns: 1fr 255px;
     grid-gap: 8px;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
   }
 }

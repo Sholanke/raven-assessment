@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import TradesChartHeader from "./trades-chart-header";
 import { ColorType, createChart } from "lightweight-charts";
-import "./index.scss";
 import { MOCK_TRADES_DATA } from "./constants";
 import { SvgSquaredArrowDown } from "../../../ui/icons";
+import "./index.scss";
 
 export default function TradesChart() {
   const chartRef = useRef<any>();
@@ -24,7 +24,7 @@ export default function TradesChart() {
     const histogramChart = chart.current.addHistogramSeries(
       CHART_CONFIG.HISTOGRAM_CONFIG
     );
-    
+
     candlestickSeries.setData(MOCK_TRADES_DATA);
     histogramChart.setData(MOCK_TRADES_DATA);
 

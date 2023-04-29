@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useTabs from "../../../../hooks/useTabs";
 import Tabs from "../../../ui/tabs";
 import FormInput from "../../../ui/form-elements/form-input";
@@ -11,90 +11,122 @@ import { classNames } from "../../../../utils";
 import "./index.scss";
 
 export default function BuyAndSell() {
-  const { tabs } = useTabs({
-    tabs: ["Buy", "Sell"],
-  });
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+
+  const { tabs, activateTab } = useTabs({ tabs: ["Buy", "Sell"] });
 
   const { tabs: secondaryTabs, isActiveTab: isActiveSecondaryTab } = useTabs({
     tabs: ["Limit", "Default", "Stop-limit"],
   });
 
+  const openBuyTab = () => {
+    setShowBottomSheet(true);
+    activateTab("Buy");
+  };
+
+  const openSellTab = () => {
+    setShowBottomSheet(true);
+    activateTab("Sell");
+  };
+
   return (
-    <div className="base-card app__buy-and-sell">
-      <Tabs config={tabs} glow />
+    <>
+      <div
+        className={classNames("base-card app__buy-and-sell", {
+          show: showBottomSheet,
+        })}
+      >
+        <Tabs config={tabs} glow />
 
-      <div className="app__buy-and-sell__secondary-tabs">
-        {secondaryTabs.map((tab, i) => (
-          <button
-            className={classNames({ active: tab.isActive })}
-            onClick={tab.onClick}
-            key={i}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {isActiveSecondaryTab("Stop-limit") && (
-        <FormInput label="USD" tooltip={{ title: "Trigger price" }} />
-      )}
-
-      {isActiveSecondaryTab(["Limit", "Stop-limit"]) && (
-        <FormInput label="USD" tooltip={{ title: "Limit price" }} />
-      )}
-
-      <FormInput label="USD" tooltip={{ title: "Amount" }} />
-
-      {isActiveSecondaryTab(["Limit", "Stop-limit"]) && (
-        <FormSelect tooltip={{ title: "Type" }} options={TYPE_OPTIONS} />
-      )}
-
-      {isActiveSecondaryTab("Limit") && (
-        <FormCheckbox>
-          <ToolTip title="Post Only" />
-        </FormCheckbox>
-      )}
-
-      <div className="app__buy-and-sell__total">
-        <p>Total</p>
-        <p>0.00</p>
-      </div>
-
-      <Button variant="gradient" full>
-        Buy BTC
-      </Button>
-
-      <div>
-        <div className="app__buy-and-sell__total-available">
-          <div>
-            <span className="app__buy-and-sell__total-available__key">
-              Total account value
-            </span>
-            <p className="app__buy-and-sell__total-available__value">0.00</p>
-          </div>
-
-          <FormCurrencyDropdown options={CURRENCY_OPTIONS} />
+        <div className="app__buy-and-sell__secondary-tabs">
+          {secondaryTabs.map((tab, i) => (
+            <button
+              className={classNames({ active: tab.isActive })}
+              onClick={tab.onClick}
+              key={i}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        <div className="app__buy-and-sell__total-available">
-          <div>
-            <span className="app__buy-and-sell__total-available__key">
-              Open Orders
-            </span>
-            <p className="app__buy-and-sell__total-available__value">0.00</p>
+        {isActiveSecondaryTab("Stop-limit") && (
+          <FormInput label="USD" tooltip={{ title: "Trigger price" }} />
+        )}
+
+        {isActiveSecondaryTab(["Limit", "Stop-limit"]) && (
+          <FormInput label="USD" tooltip={{ title: "Limit price" }} />
+        )}
+
+        <FormInput label="USD" tooltip={{ title: "Amount" }} />
+
+        {isActiveSecondaryTab(["Limit", "Stop-limit"]) && (
+          <FormSelect tooltip={{ title: "Type" }} options={TYPE_OPTIONS} />
+        )}
+
+        {isActiveSecondaryTab("Limit") && (
+          <FormCheckbox>
+            <ToolTip title="Post Only" />
+          </FormCheckbox>
+        )}
+
+        <div className="app__buy-and-sell__total">
+          <p>Total</p>
+          <p>0.00</p>
+        </div>
+
+        <Button variant="gradient" full>
+          Buy BTC
+        </Button>
+
+        <div>
+          <div className="app__buy-and-sell__total-available">
+            <div>
+              <span className="app__buy-and-sell__total-available__key">
+                Total account value
+              </span>
+              <p className="app__buy-and-sell__total-available__value">0.00</p>
+            </div>
+
+            <FormCurrencyDropdown options={CURRENCY_OPTIONS} />
           </div>
 
-          <div>
-            <span className="app__buy-and-sell__total-available__key">
-              Available
-            </span>
-            <p className="app__buy-and-sell__total-available__value">0.00</p>
+          <div className="app__buy-and-sell__total-available">
+            <div>
+              <span className="app__buy-and-sell__total-available__key">
+                Open Orders
+              </span>
+              <p className="app__buy-and-sell__total-available__value">0.00</p>
+            </div>
+
+            <div>
+              <span className="app__buy-and-sell__total-available__key">
+                Available
+              </span>
+              <p className="app__buy-and-sell__total-available__value">0.00</p>
+            </div>
           </div>
         </div>
+
+        <Button>Deposit</Button>
       </div>
 
-      <Button>Deposit</Button>
-    </div>
+      {!showBottomSheet ? (
+        <div className="app__buy-and-sell__mobile-btns">
+          <Button variant="success" onClick={openBuyTab}>
+            Buy
+          </Button>
+          <Button variant="danger" onClick={openSellTab}>
+            Sell
+          </Button>
+        </div>
+      ) : (
+        <div
+          className="app__buy-and-sell__bottom-sheet-overlay"
+          onClick={() => setShowBottomSheet(false)}
+        ></div>
+      )}
+    </>
   );
 }
 

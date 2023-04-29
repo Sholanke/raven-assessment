@@ -1,8 +1,12 @@
 .app__open-orders {
-  padding: 16px;
-
   .base-tabs__tab {
     padding: 10px 30px !important;
+  }
+
+  &__tabs-container {
+    max-width: calc(100vw - 16px);
+    overflow: auto;
+    padding: 16px;
   }
 
   &__empty-state {
