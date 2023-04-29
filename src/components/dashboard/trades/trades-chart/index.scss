@@ -22,6 +22,12 @@
       gap: 2px;
       width: 100%;
       overflow: auto;
+      border-top: 0 !important;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
     }
 
     &__filter-btn,
@@ -38,13 +44,11 @@
       }
     }
 
-    button {
-      display: flex;
-      align-items: center;
-    }
-
     &__filter-label {
       padding: 0;
+      @include mobile {
+        margin-right: 6px;
+      }
     }
 
     &__actions {
@@ -87,6 +91,9 @@
         position: absolute;
         z-index: 2;
         top: 0;
+        width: 100%;
+        overflow: auto;
+        white-space: nowrap;
 
         button {
           display: flex;

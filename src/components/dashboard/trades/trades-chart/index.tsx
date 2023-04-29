@@ -3,9 +3,15 @@ import TradesChartHeader from "./trades-chart-header";
 import { ColorType, createChart } from "lightweight-charts";
 import { MOCK_TRADES_DATA } from "./constants";
 import { SvgSquaredArrowDown } from "../../../ui/icons";
+import { classNames } from "../../../../utils";
+import useResizeObserver from "../../../../hooks/useResizeObserver";
 import "./index.scss";
 
-export default function TradesChart() {
+interface TradesChartProps {
+  className?: string;
+}
+
+export default function TradesChart({ className = "" }: TradesChartProps) {
   const chartRef = useRef<any>();
   const chart = useRef<any>();
 
@@ -27,17 +33,15 @@ export default function TradesChart() {
 
     candlestickSeries.setData(MOCK_TRADES_DATA);
     histogramChart.setData(MOCK_TRADES_DATA);
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      const { width, height } = entries[0].contentRect;
-      chart.current.applyOptions({ width, height });
-    });
-
-    resizeObserver.observe(chartRef.current);
   }, []);
 
+  useResizeObserver((entries) => {
+    const { width, height } = entries[0].contentRect;
+    chart.current.applyOptions({ width, height });
+  }, chartRef);
+
   return (
-    <div className="app__trades-chart">
+    <div className={classNames("app__trades-chart", className)}>
       <TradesChartHeader />
       <div className="app__trades-chart__content base-card">
         <div className="app__trades-chart__content__chart">

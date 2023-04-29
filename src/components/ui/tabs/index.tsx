@@ -1,6 +1,6 @@
 import React from "react";
-import "./index.scss";
 import { classNames } from "../../../utils";
+import "./index.scss";
 
 interface TabsProps {
   config: { isActive: boolean; label: string; onClick: () => void }[];

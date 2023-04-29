@@ -10,7 +10,7 @@ export default function Trades() {
     <div className="app__container app__dashboard-trades-container">
       <div className="app__dashboard-trades">
         <div className="app__dashboard-trades__grid">
-          <TradesChart />
+          <TradesChart className="app__desktop-chart" />
           <OrderBook />
         </div>
         <OpenOrders />

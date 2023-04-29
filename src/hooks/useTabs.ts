@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMemo } from "react";
 
 interface UseTabsProps {
@@ -7,17 +7,20 @@ interface UseTabsProps {
 
 export default function useTabs({ tabs }: UseTabsProps) {
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  const isActiveTab = (slug: string | string[]) => {
-    return Array.isArray(slug) ? slug.includes(activeTab) : activeTab === slug;
-  };
+
+  const isActiveTab = useCallback(
+    (slug: string | string[]) =>
+      Array.isArray(slug) ? slug.includes(activeTab) : activeTab === slug,
+    [activeTab]
+  );
 
   const modifiedTabs = useMemo(() => {
-    return tabs.map((tab, i) => ({
+    return tabs.map((tab) => ({
       label: tab,
       onClick: () => setActiveTab(tab),
       isActive: isActiveTab(tab),
     }));
-  }, [tabs]);
+  }, [tabs, isActiveTab]);
 
   return {
     tabs: modifiedTabs,

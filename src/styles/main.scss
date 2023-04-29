@@ -80,10 +80,25 @@ body {
   margin-right: auto;
   padding-left: 8px;
   padding-right: 8px;
+
+  @include mobile {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .base-card {
   background-color: var(--dark-mode-card-bg);
   border: 1px solid var(--dark-mode-card-stroke);
   border-radius: 8px;
+
+  @include mobile {
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

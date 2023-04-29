@@ -13,15 +13,15 @@ import useClickOutside from "../../../hooks/useClickOutside";
 
 interface FormSelectDropDownProps {
   options: { value: string; label: string; icon?: string }[];
-  title: string;
+  title?: string;
   onChange?: (value: string) => void;
-  value: string;
+  value?: string;
   children?: ReactNode;
 }
 
 export default function FormSelectDropDown({
   options,
-  title,
+  title = "an option",
   onChange,
   value: selectedValue,
   children,

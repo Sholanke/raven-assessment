@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.scss";
-import { SvgAngleRight, SvgGlobe, SvgLogOut, SvgLogo } from "../icons";
+import { SvgAngleRight, SvgGlobe, SvgLogOut, SvgLogo, SvgMenu } from "../icons";
+import FormSelectDropDown from "../form-elements/form-select-dropdown";
 
 export default function NavBar() {
   return (
@@ -31,14 +32,28 @@ export default function NavBar() {
             <SvgGlobe />
           </button>
 
-          <button>
+          <button className="app__nav-bar__actions__desktop-logout">
             <SvgLogOut />
           </button>
+
+          <div className="app__nav-bar__actions__mobile-menu">
+            <FormSelectDropDown options={LINKS} value="exchange">
+              <button>
+                <SvgMenu />
+              </button>
+            </FormSelectDropDown>
+          </div>
         </div>
       </nav>
     </div>
   );
 }
+
+const LINKS = [
+  { label: "Exchange", value: "exchange" },
+  { label: "Wallets", value: "wallet" },
+  { label: "Roqqu Hub", value: "roqqu-hub" },
+];
 
 const MOCK_PROFILE = {
   fullName: "Olamide Sholanke",
