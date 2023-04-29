@@ -1,9 +1,9 @@
 import React from "react";
 import OrderBook from "./order-book";
-import "./index.scss";
 import BuyAndSell from "./buy-and-sell";
 import TradesChart from "./trades-chart";
 import OpenOrders from "./open-orders";
+import "./index.scss";
 
 export default function Trades() {
   return (
