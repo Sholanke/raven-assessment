@@ -12,8 +12,20 @@
     padding-left: 8px !important;
   }
 
+  @include mobile {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+    background-color: var(--roqqu-primary-blue);
+  }
+
   &-container {
     border-bottom: 1px solid var(--dark-mode-card-stroke2);
+
+    @include mobile {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
   }
 
   &__links {

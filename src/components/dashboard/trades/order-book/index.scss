@@ -1,8 +1,14 @@
+@import "../../../../styles/mixins";
+
 .app__trades__order-book {
   padding: 12px 0;
 
   &__section {
     padding: 0 8px;
+
+    @include mobile {
+      padding: 0 16px;
+    }
   }
 
   &__header {

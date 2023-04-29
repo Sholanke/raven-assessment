@@ -78,6 +78,10 @@
     border-top-right-radius: 0 !important;
     border-top-left-radius: 0 !important;
 
+    @include mobile {
+      border-bottom: 0 !important;
+    }
+
     &__chart {
       position: relative;
       min-height: 496px;
@@ -133,7 +137,8 @@
         min-height: unset !important;
 
         @include mobile {
-          padding-top: 60px;
+          padding-top: 50px;
+          padding: 50px 4px 0 4px;
         }
       }
     }
