@@ -22,13 +22,17 @@ export default function TradingPairRow({
       <div>
         <div className="base-pair-icon">
           <img src={getCoinIconSrc(assets.baseAsset)} alt={assets.baseAsset} />
-          <img src={getCoinIconSrc(assets?.quoteAsset)} alt={assets.quoteAsset}
+          <img
+            src={getCoinIconSrc(assets?.quoteAsset)}
+            alt={assets.quoteAsset}
           />
         </div>
-        <p>{assets.baseAsset} - {assets.quoteAsset}</p>
+        <p>
+          {assets.baseAsset} - {assets.quoteAsset}
+        </p>
       </div>
       <div className="app__dashboard-metrics__coin-dropdown__table-row__value">
-        <p>${amount === "0" ? "0.00" : amount}</p>
+        <p>{amount === "0" ? "0.00" : amount}</p>
         <p
           className={classNames("percentage", {
             decrease: +percentage < 0,

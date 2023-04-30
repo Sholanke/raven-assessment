@@ -6,7 +6,7 @@ import { useCoinContext } from "../../../context/coinContext";
 import "./index.scss";
 
 export default function DashboardMetrics() {
-  const { selectedPair } = useCoinContext();
+  const { selectedPair, quoteAsset } = useCoinContext();
 
   const getPercentageChange = (price = 0) => {
     const percent =
@@ -19,7 +19,7 @@ export default function DashboardMetrics() {
     metrics: [
       {
         label: "24h change",
-        value: `$${formatNumber(Math.abs(+selectedPair?.priceChange))} ${
+        value: `${formatNumber(Math.abs(+selectedPair?.priceChange))} ${
           formatPercentage(selectedPair?.priceChangePercent) || "0"
         }%`,
         icon: SvgClock,
@@ -28,14 +28,14 @@ export default function DashboardMetrics() {
       },
       {
         label: "24h high",
-        value: `$${formatNumber(selectedPair?.highPrice)} ${
+        value: `${formatNumber(selectedPair?.highPrice)} ${
           formatPercentage(getPercentageChange(selectedPair?.highPrice)) || "0"
         }%`,
         icon: SvgArrowUp,
       },
       {
         label: "24h low",
-        value: `$${formatNumber(selectedPair?.lowPrice)} ${
+        value: `${formatNumber(selectedPair?.lowPrice)} ${
           formatPercentage(getPercentageChange(selectedPair?.lowPrice)) || "0"
         }%`,
         icon: SvgArrowDown,
@@ -53,7 +53,10 @@ export default function DashboardMetrics() {
       <div className="app__dashboard-metrics base-card">
         <div className="app__dashboard-metrics__coin-dropdown-container">
           <CoinDropdown />
-          <div className="app__dashboard-metrics__price">${metaData.price}</div>
+          <div className="app__dashboard-metrics__price">
+            {quoteAsset === "USDT" && "$"}
+            {metaData.price}
+          </div>
         </div>
 
         <div className="app__dashboard-metrics__changes">
