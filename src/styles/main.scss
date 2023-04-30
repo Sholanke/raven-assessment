@@ -114,6 +114,7 @@ body {
   img {
     height: 32px;
     width: 32px;
+    border-radius: 100vh;
 
     @include mobile {
       height: 24px;
