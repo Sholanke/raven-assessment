@@ -20,14 +20,12 @@ export default function OrderBookTab() {
     [coin.symbol]
   );
 
-  const asks = response
-    ? formatOrderBookData(response.asks?.slice(0, 5), true)
-    : [];
+  const asks = response ? formatOrderBookData(response.asks?.slice(0, 5), true) : [];
   const bids = response ? formatOrderBookData(response.bids) : [];
   const lowestAsk = asks[asks.length - 1]?.price;
   const highestBid = bids[0]?.price;
 
-  const getContext = () => {
+  const getContent = () => {
     if (isLoading && !response) {
       return <p className="base-empty">Fetching order book...</p>;
     }
@@ -94,7 +92,7 @@ export default function OrderBookTab() {
           <div>Total</div>
         </div>
 
-        {getContext()}
+        {getContent()}
       </div>
     </>
   );
