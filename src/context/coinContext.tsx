@@ -23,11 +23,9 @@ const coinContext = createContext<CoinContext>({
   updateCoinContext: () => {},
 });
 
-const EXCHANGE_INFO_URL = `${BASE_URL}/ticker/24hr`;
-
 export default function CoinContextProvider({ children }) {
   const [data, setData] = useState({ symbol: "BTCUSDT" });
-  const { response, isLoading } = useRequest(EXCHANGE_INFO_URL, {
+  const { response, isLoading } = useRequest(`${BASE_URL}/ticker/24hr`, {
     Method: "POST",
   });
 
