@@ -28,6 +28,7 @@ Your app is ready to be deployed!
 
 Below is a tree of this project to help with easy navigation.
 
+<pre>
 src/
 ├── assets/
 │   └── fonts/
@@ -63,3 +64,4 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── utils.ts
+</pre>
