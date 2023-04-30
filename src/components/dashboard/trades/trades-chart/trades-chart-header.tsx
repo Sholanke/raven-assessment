@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { classNames } from "../../../../utils";
 import {
   SvgAngleDown,
@@ -8,26 +8,24 @@ import {
   SvgUndo,
 } from "../../../ui/icons";
 
-export default function TradesChartHeader() {
-  const [activeTimeFilter, setActiveTimeFilter] = useState("4H");
-
+export default function TradesChartHeader({ interval, setInterval }) {
   return (
     <div className="app__trades-chart__header base-card">
       <p className="app__trades-chart__header__filter-label">Time</p>
-      {TIME_FILTERS.map((filter, i) => (
+      {INTERVALS.map((filter, i) => (
         <button
           className={classNames("app__trades-chart__header__filter-btn", {
-            active: filter.label === activeTimeFilter,
+            active: filter.value === interval,
           })}
-          onClick={() => setActiveTimeFilter(filter.label)}
+          onClick={() => setInterval(filter.value)}
           key={i}
         >
           {filter.label}
         </button>
       ))}
 
-      <button className="app__trades-chart__header__filter-btn" key="1m">
-        1M <SvgAngleDown />
+      <button key="1m">
+        <SvgAngleDown />
       </button>
 
       <div className="app__trades-chart__header__actions">
@@ -58,10 +56,11 @@ export default function TradesChartHeader() {
   );
 }
 
-const TIME_FILTERS = [
-  { label: "1H" },
-  { label: "2H" },
-  { label: "4H" },
-  { label: "1D" },
-  { label: "1W" },
+const INTERVALS = [
+  { label: "1H", value: "1h" },
+  { label: "2H", value: "2h" },
+  { label: "4H", value: "4h" },
+  { label: "1D", value: "1d" },
+  { label: "1W", value: "1w" },
+  { label: "1M", value: "1m" },
 ];

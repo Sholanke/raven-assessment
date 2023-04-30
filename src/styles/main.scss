@@ -54,10 +54,10 @@ button {
   border: none;
   cursor: pointer;
   color: inherit;
-  transition: transform 0.1s ease;
+  transition: transform 0.04s ease;
 
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
 }
 

@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TradesChartHeader from "./trades-chart-header";
 import { ColorType, createChart } from "lightweight-charts";
-import { MOCK_TRADES_DATA } from "./constants";
 import { SvgSquaredArrowDown } from "../../../ui/icons";
 import { classNames } from "../../../../utils";
 import useResizeObserver from "../../../../hooks/useResizeObserver";
+import useRequest from "../../../../hooks/useRequest";
+import { useCoinContext } from "../../../../context/coinContext";
+import { formatCandleStickData } from "./utils";
 import "./index.scss";
 
 interface TradesChartProps {
@@ -12,8 +14,24 @@ interface TradesChartProps {
 }
 
 export default function TradesChart({ className = "" }: TradesChartProps) {
+  const [interval, setInterval] = useState("4h");
+  const { coin } = useCoinContext();
+  const { response } = useRequest(
+    `https://api.binance.com/api/v3/klines?symbol=${coin.symbol}&interval=${interval}`,
+    { method: "GET" },
+    [coin.symbol, interval]
+  );
+  const tradingData = response ? formatCandleStickData(response) : [];
+
   const chartRef = useRef<any>();
   const chart = useRef<any>();
+  const candlestickSeriesRef = useRef<any>();
+  const histogramChartRef = useRef<any>();
+
+  useEffect(() => {
+    candlestickSeriesRef.current?.setData(tradingData);
+    histogramChartRef.current?.setData(tradingData);
+  }, [tradingData]);
 
   useEffect(() => {
     if (chart.current) return;
@@ -24,15 +42,12 @@ export default function TradesChart({ className = "" }: TradesChartProps) {
       ...CHART_CONFIG.CHART_LAYOUT,
     });
 
-    const candlestickSeries = chart.current.addCandlestickSeries(
+    candlestickSeriesRef.current = chart.current.addCandlestickSeries(
       CHART_CONFIG.CANDLE_STICK_CONFIG
     );
-    const histogramChart = chart.current.addHistogramSeries(
+    histogramChartRef.current = chart.current.addHistogramSeries(
       CHART_CONFIG.HISTOGRAM_CONFIG
     );
-
-    candlestickSeries.setData(MOCK_TRADES_DATA);
-    histogramChart.setData(MOCK_TRADES_DATA);
   }, []);
 
   useResizeObserver((entries) => {
@@ -42,7 +57,7 @@ export default function TradesChart({ className = "" }: TradesChartProps) {
 
   return (
     <div className={classNames("app__trades-chart", className)}>
-      <TradesChartHeader />
+      <TradesChartHeader interval={interval} setInterval={setInterval} />
       <div className="app__trades-chart__content base-card">
         <div className="app__trades-chart__content__chart">
           <div className="app__trades-chart__content__chart__metrics">
@@ -118,8 +133,6 @@ const CHART_CONFIG = {
     borderUpColor: "#00C076",
     wickDownColor: "#FF6838",
     wickUpColor: "#00C076",
-    upColor: "#00C076",
-    downColor: "#FF6838",
   },
   HISTOGRAM_CONFIG: {
     base: 0,

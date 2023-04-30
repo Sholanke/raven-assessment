@@ -39,7 +39,6 @@
     align-items: center;
     gap: 8px;
     margin-right: 14px;
-    transform: none !important;
 
     @include mini-tablet {
       margin-right: 23px;
@@ -68,6 +67,8 @@
       padding: 16px;
       bottom: -15px !important;
       min-width: 444px !important;
+      max-height: 400px;
+      overflow: auto !important;
 
       @include mini-tablet {
         min-width: 90vw !important;
@@ -140,11 +141,18 @@
       justify-content: space-between;
       font-size: 14px;
       color: var(--dark-mode-tint3);
-      padding: 12px 0;
       gap: 20px;
+      width: 100%;
+      padding: 8px;
+      margin: 12px 0;
+      border-radius: 8px;
 
       &:first-child {
-        padding-top: 0;
+        margin-top: 0;
+      }
+
+      &.active {
+        background-color: var(--dark-mode-card-bg);
       }
 
       > div {
@@ -158,6 +166,10 @@
 
         .percentage {
           color: var(--chart-green);
+
+          &.decrease {
+            color: var(--chart-red);
+          }
         }
       }
     }
@@ -207,6 +219,12 @@
     &.highlight {
       p {
         color: var(--chart-green);
+      }
+
+      &.decrease {
+        p {
+          color: var(--chart-red);
+        }
       }
     }
   }
