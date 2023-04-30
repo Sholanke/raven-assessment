@@ -25,7 +25,7 @@ export default function TradingPairRow({
           <img src={getCoinIconSrc(assets?.quoteAsset)} alt={assets.quoteAsset}
           />
         </div>
-        <p>{symbol}</p>
+        <p>{assets.baseAsset} - {assets.quoteAsset}</p>
       </div>
       <div className="app__dashboard-metrics__coin-dropdown__table-row__value">
         <p>${amount === "0" ? "0.00" : amount}</p>

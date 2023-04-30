@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { SvgBtcUsdt, SvgSearchIcon, SvgSharpAngleDown } from "../../ui/icons";
+import { SvgSearchIcon, SvgSharpAngleDown } from "../../ui/icons";
 import { classNames, getCoinIconSrc } from "../../../utils";
 import useTabs from "../../../hooks/useTabs";
 import useClickOutside from "../../../hooks/useClickOutside";
