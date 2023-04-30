@@ -1,4 +1,4 @@
-# Sisyphus assessment
+# Sisyphus Assessment
 
 This project was created with [Vite and React](https://vitejs.dev/guide/).
 
