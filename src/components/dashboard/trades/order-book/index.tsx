@@ -27,8 +27,9 @@ export default function OrderBook() {
       </div>
 
       {isActiveTab("Charts") ? <TradesChart /> : null}
-      {isActiveTab("Order Book") ? <OrderBookTab /> : null}
-      {isActiveTab("Recent Trades") ? <OrderBookTab /> : null}
+      {isActiveTab("Order Book") || isActiveTab("Recent Trades") ? (
+        <OrderBookTab />
+      ) : null}
     </div>
   );
 }
