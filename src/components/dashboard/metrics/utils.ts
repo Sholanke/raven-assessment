@@ -1,13 +1,17 @@
 import { formatPercentage, formatNumber } from "../../../utils";
-import { SvgBtcUsdt } from "../../ui/icons";
 
 export function getSymbolsTableData(symbols: Record<string, any>[]) {
-  return symbols?.map?.(({ symbol, lastPrice, priceChangePercent }) => ({
-    symbol: `${symbol}`,
-    amount: formatNumber(lastPrice),
-    percentage: formatPercentage(priceChangePercent),
-    icon: SvgBtcUsdt,
-  }));
+  return symbols?.map?.(
+    ({ symbol, lastPrice, priceChangePercent, baseAsset, quoteAsset }) => ({
+      symbol: `${symbol}`,
+      amount: formatNumber(lastPrice),
+      percentage: formatPercentage(priceChangePercent),
+      assets: {
+        baseAsset,
+        quoteAsset,
+      },
+    })
+  );
 }
 
 export function filterPairsByQuoteAsset(quoteAsset) {

@@ -27,9 +27,16 @@ const EXCHANGE_INFO_URL = `${BASE_URL}/ticker/24hr`;
 
 export default function CoinContextProvider({ children }) {
   const [data, setData] = useState({ symbol: "BTCUSDT" });
-  const { response: allPairs, isLoading } = useRequest(EXCHANGE_INFO_URL, {
+  const { response, isLoading } = useRequest(EXCHANGE_INFO_URL, {
     Method: "POST",
   });
+
+  const allPairs = useMemo(() => {
+    return response?.map((pair) => {
+      const assets = getAssetsBySymbol(pair.symbol);
+      return { ...pair, ...assets };
+    });
+  }, [response]);
 
   const selectedPair = useMemo(() => {
     return allPairs?.find?.((pair) => pair.symbol === data.symbol);
@@ -40,7 +47,7 @@ export default function CoinContextProvider({ children }) {
   const updateCoinContext = (update: Record<string, any>) => {
     setData((prev) => ({ ...prev, ...update }));
   };
-
+  
   return (
     <coinContext.Provider
       value={{

@@ -31,3 +31,7 @@ export function formatNumber(price: string | number) {
     !price || price == 0 ? "0.00" : Number(price).toLocaleString("en-US");
   return n === "0" ? price : n;
 }
+
+export function getCoinIconSrc(asset) {
+  return `https://coinicons-api.vercel.app/api/icon/${asset?.toLocaleLowerCase()}`;
+}

@@ -44,13 +44,6 @@
       margin-right: 23px;
     }
 
-    &__coin-icon {
-      @include mobile {
-        height: 24px;
-        width: 44px;
-      }
-    }
-
     p {
       font-size: 24px;
       margin-right: 8px;

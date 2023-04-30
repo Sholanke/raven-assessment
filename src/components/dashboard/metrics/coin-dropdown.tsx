@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { SvgBtcUsdt, SvgSearchIcon, SvgSharpAngleDown } from "../../ui/icons";
-import { classNames } from "../../../utils";
+import { classNames, getCoinIconSrc } from "../../../utils";
 import useTabs from "../../../hooks/useTabs";
 import useClickOutside from "../../../hooks/useClickOutside";
 import {
@@ -10,11 +10,11 @@ import {
 } from "./utils";
 import { useCoinContext } from "../../../context/coinContext";
 import debounce from "lodash.debounce";
+import TradingPairRow from "./trading-pair-row";
 
 export default function CoinDropdown() {
   const dropdownRef = useRef(null);
   const {
-    coin,
     allPairs,
     fetchingTradingPairs,
     baseAsset,
@@ -42,7 +42,7 @@ export default function CoinDropdown() {
   const search = useCallback(
     debounce((term) => {
       setSearchTerm(term);
-    }, 700),
+    }, 400),
     []
   );
 
@@ -62,29 +62,12 @@ export default function CoinDropdown() {
     return (
       <>
         {filteredTradingPairs?.map(
-          ({ symbol, amount, percentage, icon: Icon }, i) => (
-            <button
-              className={classNames(
-                "app__dashboard-metrics__coin-dropdown__table-row",
-                { active: symbol === coin.symbol }
-              )}
+          ({ symbol, amount, percentage, assets }, i) => (
+            <TradingPairRow
+              {...{ symbol, amount, percentage, assets }}
               onClick={() => selectPair(symbol)}
               key={i}
-            >
-              <div>
-                <Icon /> <p>{symbol}</p>
-              </div>
-              <div className="app__dashboard-metrics__coin-dropdown__table-row__value">
-                <p>${amount === "0" ? "0.00" : amount}</p>
-                <p
-                  className={classNames("percentage", {
-                    decrease: +percentage < 0,
-                  })}
-                >
-                  {percentage}%
-                </p>
-              </div>
-            </button>
+            />
           )
         )}
       </>
@@ -97,7 +80,10 @@ export default function CoinDropdown() {
         className="app__dashboard-metrics__coin-dropdown"
         onClick={() => setCoinDropdownVisibility(!showCoinDropdown)}
       >
-        <SvgBtcUsdt className="app__dashboard-metrics__coin-dropdown__coin-icon" />
+        <div className="base-pair-icon">
+          <img src={getCoinIconSrc(baseAsset)} alt={baseAsset} />
+          <img src={getCoinIconSrc(quoteAsset)} alt={quoteAsset} />
+        </div>
         <p>
           {baseAsset}/{quoteAsset}
         </p>

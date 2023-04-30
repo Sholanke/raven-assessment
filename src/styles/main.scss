@@ -109,3 +109,21 @@ body {
   padding: 50px 15px;
   text-align: center;
 }
+
+.base-pair-icon {
+  img {
+    height: 32px;
+    width: 32px;
+
+    @include mobile {
+      height: 24px;
+      width: 24px;
+    }
+
+    &:nth-child(2) {
+      margin-left: -10px;
+      border: 1px solid var(--dark-mode-card-bg);
+      border-radius: 100vh;
+    }
+  }
+}
