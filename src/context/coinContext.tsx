@@ -32,10 +32,10 @@ export default function CoinContextProvider({ children }) {
   });
 
   const allPairs = useMemo(() => {
-    return response?.map((pair) => {
-      const assets = getAssetsBySymbol(pair.symbol);
-      return { ...pair, ...assets };
-    });
+    return response?.map((pair) => ({
+      ...pair,
+      ...getAssetsBySymbol(pair.symbol),
+    }));
   }, [response]);
 
   const selectedPair = useMemo(() => {
@@ -47,7 +47,7 @@ export default function CoinContextProvider({ children }) {
   const updateCoinContext = (update: Record<string, any>) => {
     setData((prev) => ({ ...prev, ...update }));
   };
-  
+
   return (
     <coinContext.Provider
       value={{
