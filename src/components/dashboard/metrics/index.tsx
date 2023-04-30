@@ -1,9 +1,8 @@
 import React from "react";
 import { SvgArrowDown, SvgArrowUp, SvgChart, SvgClock } from "../../ui/icons";
-import { classNames } from "../../../utils";
+import { classNames, formatPercentage, formatNumber } from "../../../utils";
 import CoinDropdown from "./coin-dropdown";
 import { useCoinContext } from "../../../context/coinContext";
-import { formatPercentage, formatPrice } from "./utils";
 import "./index.scss";
 
 export default function DashboardMetrics() {
@@ -16,11 +15,11 @@ export default function DashboardMetrics() {
   };
 
   const metaData = {
-    price: formatPrice(selectedPair?.lastPrice || 0),
+    price: formatNumber(selectedPair?.lastPrice || 0),
     metrics: [
       {
         label: "24h change",
-        value: `$${formatPrice(Math.abs(+selectedPair?.priceChange))} ${
+        value: `$${formatNumber(Math.abs(+selectedPair?.priceChange))} ${
           formatPercentage(selectedPair?.priceChangePercent) || "0"
         }%`,
         icon: SvgClock,
@@ -29,21 +28,21 @@ export default function DashboardMetrics() {
       },
       {
         label: "24h high",
-        value: `$${formatPrice(selectedPair?.highPrice)} ${
+        value: `$${formatNumber(selectedPair?.highPrice)} ${
           formatPercentage(getPercentageChange(selectedPair?.highPrice)) || "0"
         }%`,
         icon: SvgArrowUp,
       },
       {
         label: "24h low",
-        value: `$${formatPrice(selectedPair?.lowPrice)} ${
+        value: `$${formatNumber(selectedPair?.lowPrice)} ${
           formatPercentage(getPercentageChange(selectedPair?.lowPrice)) || "0"
         }%`,
         icon: SvgArrowDown,
       },
       {
         label: "24h volume",
-        value: `${formatPrice(selectedPair?.volume)}`,
+        value: `${formatNumber(selectedPair?.volume)}`,
         icon: SvgChart,
       },
     ],

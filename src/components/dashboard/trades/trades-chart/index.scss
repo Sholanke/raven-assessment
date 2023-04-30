@@ -6,6 +6,11 @@
     overflow: hidden;
   }
 
+  &.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
   &__header {
     padding: 18px 16px;
     border-bottom: 1px solid var(--dark-mode-card-stroke);
@@ -37,6 +42,7 @@
       font-size: 14px;
       display: flex;
       gap: 12px;
+      line-height: 1;
 
       &.active {
         background-color: var(--dark-mode-tint);

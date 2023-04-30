@@ -1,10 +1,15 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import useRequest from "../hooks/useRequest";
+import { BASE_URL } from "../constants";
+import { getAssetsBySymbol } from "../utils";
 
 interface CoinContext {
   coin: { symbol: string };
   allPairs: Record<string, any>[];
   selectedPair: Record<string, any> | null;
+  baseAsset: string;
+  quoteAsset: string;
+  fetchingTradingPairs: boolean;
   updateCoinContext: (update: Record<string, any>) => void;
 }
 
@@ -12,20 +17,25 @@ const coinContext = createContext<CoinContext>({
   coin: { symbol: "" },
   allPairs: [],
   selectedPair: null,
+  baseAsset: "",
+  quoteAsset: "",
+  fetchingTradingPairs: false,
   updateCoinContext: () => {},
 });
 
-const EXCHANGE_INFO_URL = "https://api.binance.com/api/v3/ticker/24hr";
+const EXCHANGE_INFO_URL = `${BASE_URL}/ticker/24hr`;
 
 export default function CoinContextProvider({ children }) {
   const [data, setData] = useState({ symbol: "BTCUSDT" });
-  const { response: allPairs } = useRequest(EXCHANGE_INFO_URL, {
+  const { response: allPairs, isLoading } = useRequest(EXCHANGE_INFO_URL, {
     Method: "POST",
   });
 
   const selectedPair = useMemo(() => {
     return allPairs?.find?.((pair) => pair.symbol === data.symbol);
   }, [data.symbol, allPairs]);
+
+  const { baseAsset, quoteAsset } = getAssetsBySymbol(data.symbol);
 
   const updateCoinContext = (update: Record<string, any>) => {
     setData((prev) => ({ ...prev, ...update }));
@@ -37,6 +47,9 @@ export default function CoinContextProvider({ children }) {
         coin: data,
         allPairs,
         selectedPair,
+        baseAsset,
+        quoteAsset,
+        fetchingTradingPairs: isLoading,
         updateCoinContext,
       }}
     >

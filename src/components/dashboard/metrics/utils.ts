@@ -1,20 +1,28 @@
+import { formatPercentage, formatNumber } from "../../../utils";
 import { SvgBtcUsdt } from "../../ui/icons";
 
 export function getSymbolsTableData(symbols: Record<string, any>[]) {
   return symbols?.map?.(({ symbol, lastPrice, priceChangePercent }) => ({
     symbol: `${symbol}`,
-    amount: formatPrice(lastPrice),
+    amount: formatNumber(lastPrice),
     percentage: formatPercentage(priceChangePercent),
     icon: SvgBtcUsdt,
   }));
 }
 
-export function formatPercentage(priceChangePercent: number) {
-  return +priceChangePercent > 0
-    ? `+${priceChangePercent}`
-    : priceChangePercent;
+export function filterPairsByQuoteAsset(quoteAsset) {
+  return (pair) => {
+    if (quoteAsset === "All") return true;
+    if (pair.symbol.endsWith(quoteAsset)) return true;
+    return false;
+  };
 }
 
-export function formatPrice(price: string | number) {
-  return !price || price == 0 ? "0.00" : Number(price).toLocaleString("en-US");
+export function filterPairBySearchTerm(searchTerm) {
+  return (pair) => {
+    if (!searchTerm) return true;
+    return pair.symbol
+      .toLocaleLowerCase()
+      .includes(searchTerm.toLocaleLowerCase());
+  };
 }

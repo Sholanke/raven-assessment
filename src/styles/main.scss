@@ -103,3 +103,9 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.base-empty {
+  color: var(--dark-mode-tint3);
+  padding: 50px 15px;
+  text-align: center;
+}

@@ -3,11 +3,67 @@ import { SvgAngleDown, SvgArrowUp } from "../../../ui/icons";
 import { classNames } from "../../../../utils";
 import { ORDERS } from "./constants";
 import useTabs from "../../../../hooks/useTabs";
+import useRequest from "../../../../hooks/useRequest";
+import { BASE_URL } from "../../../../constants";
+import { useCoinContext } from "../../../../context/coinContext";
+import { formatOrderBookData } from "./utils";
 
 export default function OrderBookTab() {
+  const { coin, baseAsset, quoteAsset } = useCoinContext();
   const { isActiveTab, activateTab } = useTabs({
     tabs: ORDERS.map(({ key }) => key),
   });
+
+  const { response, isLoading } = useRequest(
+    `${BASE_URL}/depth?symbol=${coin.symbol}&limit=6`,
+    { method: "GET" },
+    [coin.symbol]
+  );
+
+  const asks = response
+    ? formatOrderBookData(response.asks?.slice(0, 5), true)
+    : [];
+  const bids = response ? formatOrderBookData(response.bids) : [];
+  const lowestAsk = asks[asks.length - 1]?.price;
+  const highestBid = bids[0]?.price;
+
+  const getContext = () => {
+    if (isLoading && !response) {
+      return <p className="base-empty">Fetching order book...</p>;
+    }
+    return (
+      <>
+        {/* ASKS */}
+        {asks.map(({ price, amount, total, percentage }, i) => (
+          <Order {...{ price, amount, total, percentage }} ask key={i} />
+        ))}
+        {asks.length === 0 ? (
+          <p className="base-empty">"No asks found"</p>
+        ) : null}
+
+        <div className="app__trades__order-book__table__divider">
+          <p
+            className={classNames({
+              "color-green": highestBid >= lowestAsk,
+              "color-red": lowestAsk > highestBid,
+            })}
+          >
+            {highestBid || "0.00"}
+          </p>
+          <SvgArrowUp />
+          <p>{lowestAsk || "0.00"}</p>
+        </div>
+
+        {/* BIDS */}
+        {bids.map(({ price, amount, total, percentage }, i) => (
+          <Order {...{ price, amount, total, percentage }} key={i} />
+        ))}
+        {bids.length === 0 ? (
+          <p className="base-empty">"No bids found</p>
+        ) : null}
+      </>
+    );
+  };
 
   return (
     <>
@@ -26,73 +82,39 @@ export default function OrderBookTab() {
           </div>
 
           <button className="app__trades__order-book__count-filter">
-            10 <SvgAngleDown />
+            5 <SvgAngleDown />
           </button>
         </div>
       </div>
 
       <div className="app__trades__order-book__table">
         <div className="app__trades__order-book__table__row--head">
-          <div>Price (USDTC)</div>
-          <div>Amounts (BTC)</div>
+          <div>Price ({quoteAsset})</div>
+          <div>Amounts ({baseAsset})</div>
           <div>Total</div>
         </div>
 
-        {ORDERS_TABLE_DATA_LOSS.map(
-          ({ price, amount, total, percentage }, i) => (
-            <div
-              className="app__trades__order-book__table__row theme-red"
-              key={i}
-            >
-              <div>{price}</div>
-              <div>{amount}</div>
-              <div>{total}</div>
-              <span
-                className="percentage-bar"
-                style={{ width: `${percentage}%` }}
-              ></span>
-            </div>
-          )
-        )}
-
-        <div className="app__trades__order-book__table__divider">
-          <p className="color-green">36,641.20</p> <SvgArrowUp />
-          <p>36,641.20</p>
-        </div>
-
-        {ORDERS_TABLE_DATA_GAIN.map(
-          ({ price, amount, total, percentage }, i) => (
-            <div
-              className="app__trades__order-book__table__row theme-green"
-              key={i}
-            >
-              <div>{price}</div>
-              <div>{amount}</div>
-              <div>{total}</div>
-              <span
-                className="percentage-bar"
-                style={{ width: `${percentage}%` }}
-              ></span>
-            </div>
-          )
-        )}
+        {getContext()}
       </div>
     </>
   );
 }
 
-const ORDERS_TABLE_DATA_LOSS = [
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 50 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 0.5 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 55 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 0.5 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 95 },
-];
-
-const ORDERS_TABLE_DATA_GAIN = [
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 90 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 60 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 40 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 50 },
-  { price: "36920.12", amount: "36920.12", total: "36920.12", percentage: 50 },
-];
+function Order({ price, amount, total, percentage, ask = false }) {
+  return (
+    <div
+      className={classNames("app__trades__order-book__table__row", {
+        "theme-green": !ask,
+        "theme-red": ask,
+      })}
+    >
+      <div>{price}</div>
+      <div>{amount}</div>
+      <div>{total}</div>
+      <span
+        className="percentage-bar"
+        style={{ width: `${percentage}%` }}
+      ></span>
+    </div>
+  );
+}

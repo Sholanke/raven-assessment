@@ -7,6 +7,7 @@ import useResizeObserver from "../../../../hooks/useResizeObserver";
 import useRequest from "../../../../hooks/useRequest";
 import { useCoinContext } from "../../../../context/coinContext";
 import { formatCandleStickData } from "./utils";
+import { BASE_URL } from "../../../../constants";
 import "./index.scss";
 
 interface TradesChartProps {
@@ -16,8 +17,8 @@ interface TradesChartProps {
 export default function TradesChart({ className = "" }: TradesChartProps) {
   const [interval, setInterval] = useState("4h");
   const { coin } = useCoinContext();
-  const { response } = useRequest(
-    `https://api.binance.com/api/v3/klines?symbol=${coin.symbol}&interval=${interval}`,
+  const { response , isLoading} = useRequest(
+    `${BASE_URL}/klines?symbol=${coin.symbol}&interval=${interval}`,
     { method: "GET" },
     [coin.symbol, interval]
   );
@@ -56,7 +57,7 @@ export default function TradesChart({ className = "" }: TradesChartProps) {
   }, chartRef);
 
   return (
-    <div className={classNames("app__trades-chart", className)}>
+    <div className={classNames("app__trades-chart", className, { "loading": isLoading })}>
       <TradesChartHeader interval={interval} setInterval={setInterval} />
       <div className="app__trades-chart__content base-card">
         <div className="app__trades-chart__content__chart">
